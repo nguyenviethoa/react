@@ -7,6 +7,7 @@
  * @flow
  */
 
+import type {Fiber} from 'react-reconciler/src/ReactFiber';
 import warning from 'shared/warning';
 import * as TestRendererScheduling from './ReactTestRendererScheduling';
 
@@ -110,7 +111,7 @@ export function getRootHostContext(
 
 export function getChildHostContext(
   parentHostContext: HostContext,
-  type: string,
+  fiber: Fiber,
   rootContainerInstance: Container,
 ): HostContext {
   return NO_CONTEXT;
