@@ -14,7 +14,7 @@ import type {
   NativeMethodsMixinType,
   ReactNativeBaseComponentViewConfig,
 } from './ReactNativeTypes';
-
+import type {Fiber} from 'react-reconciler/src/ReactFiber';
 import {
   mountSafeCallback_NOT_REALLY_SAFE,
   warnForStyleProps,
@@ -260,7 +260,7 @@ export function getRootHostContext(
 
 export function getChildHostContext(
   parentHostContext: HostContext,
-  type: string,
+  fiber: Fiber,
   rootContainerInstance: Container,
 ): HostContext {
   const prevIsInAParentText = parentHostContext.isInAParentText;
@@ -269,7 +269,8 @@ export function getChildHostContext(
     type === 'RCTMultilineTextInputView' || // iOS
     type === 'RCTSinglelineTextInputView' || // iOS
     type === 'RCTText' ||
-    type === 'RCTVirtualText';
+    type === 'RCTVirtualText' ||
+    !!(fiber.return && fiber.return.type && fiber.return.type.canRenderString);
 
   if (prevIsInAParentText !== isInAParentText) {
     return {isInAParentText};
